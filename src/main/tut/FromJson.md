@@ -60,7 +60,8 @@ Luckily, our JSON fields match the case class fields.
 We can write a decoder!
 
 ### forProduct helpers - for flat objects
-This method lets to map the JSON field names to case class fields.
+These methodd lets us map the JSON field names to case class fields.
+The types are resolved by the compiler.
 
 ```tut
 import io.circe.Decoder
@@ -93,5 +94,13 @@ val newPersonJson = json"""{ "name": "Young person", "age": 100 }"""
 decodePersonCursor.decodeJson(newPersonJson)
 ```
 
+Note I created new JSON using the literal module. This is very useful for
+creating small snippets of typechecked JSON.
 
-## "I want to get an array of objects in the JSON to be an array of JSON
+
+### Using Shapeless magic
+```tut
+import io.circe.generic.auto._
+
+decode[Person]("""{ "name": "Very easygoing person", "age": 1 }""")
+```
